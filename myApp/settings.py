@@ -11,16 +11,26 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from .settings_local import *
+import os
+from configurations import Configuration, values
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+class Development(Configuration):
+"""開発用の設定"""
+# Build paths inside the project like this:BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-gpcnmm&y4$lu+9km5y2-+vd=@bxfhcm5ppr6%a#ast5lg2mm#p'
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -121,3 +131,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/calendars/login/'
+
+class Production(Development):
+    DEBUG = False
+    SECRET_KEY = values.SecretValue()
